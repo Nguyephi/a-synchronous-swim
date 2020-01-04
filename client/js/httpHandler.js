@@ -17,7 +17,7 @@
     })
   };
 
-  setInterval(() => {ajaxGetCommand(SwimTeam.move)} , 1000);
+  // setInterval(() => {ajaxGetCommand(SwimTeam.move)} , 1000);
 
   //
 

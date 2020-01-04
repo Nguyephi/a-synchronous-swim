@@ -20,21 +20,31 @@ module.exports.router = (req, res, next = ()=>{}) => {
   // conditional to check req type
   switch(req.method) {
     case 'GET':
-      res.writeHead(200, {"content-type": "text/html", ...headers});
-      var queuedMessageFromServer = messages.dequeue()
-      if (queuedMessageFromServer !== undefined) {
-        res.write(queuedMessageFromServer);
+      if (req.url === '/background.jpg') {
+        res.writeHead(200, {"content-type": "image/jpeg", ...headers});
+        fs.readFile(exports.backgroundImageFile, (err, data) => {
+          res.write(data);
+          res.end();
+        })
+      } else {
+        res.writeHead(200, {"content-type": "text/html", ...headers});
+        var queuedMessageFromServer = messages.dequeue()
+        if (queuedMessageFromServer !== undefined) {
+          res.write(queuedMessageFromServer);
+          res.end();
+        }
       }
       break;
     case 'POST':
       req.on('data', directionKey => {
-        console.log(typeof directionKey);
         messages.enqueue(directionKey)
       })
       res.writeHead(200, headers);
+      res.end();
       // filter between the file upload and the command keys being 'pressed'
       break;
     case 'OPTIONS': res.writeHead(200, headers);
+      res.end()
       break;
       // delete
       // put
@@ -42,8 +52,8 @@ module.exports.router = (req, res, next = ()=>{}) => {
   }
 
 
-  // signifying that the response object is finished being created
-  res.end();
+  // // signifying that the response object is finished being created
+  // res.end();
   next(); // invoke next() at the end of a request to help with testing!
 };
 
