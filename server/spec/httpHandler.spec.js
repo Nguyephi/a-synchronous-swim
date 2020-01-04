@@ -24,10 +24,12 @@ describe('server responses', () => {
   it('should respond to a GET request for a swim command', (done) => {
     // write your test here
     // send the request to the GET of the server
-    let {req, res} = server.mock('/', 'GET');
-    // Generate random command
     var arr = ['up', 'down', 'left', 'right'];
+    let post = server.mock('/', 'POST', arr[Math.floor(Math.random() * arr.length)]);
+    httpHandler.router(post.req, post.res)
+    // Generate random command
 
+    let {req, res} = server.mock('/', 'GET');
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);

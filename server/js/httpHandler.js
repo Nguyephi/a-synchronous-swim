@@ -21,9 +21,6 @@ module.exports.router = (req, res, next = ()=>{}) => {
   switch(req.method) {
     case 'GET':
       res.writeHead(200, {"content-type": "text/html", ...headers});
-      // var outputKeyDirections = ['left', 'right', 'up', 'down'];
-      // var randomArr = Math.floor(Math.random() * outputKeyDirections.length);
-      // var randomOutputKeyDirection = outputKeyDirections[randomArr];
       var queuedMessageFromServer = messages.dequeue()
       if (queuedMessageFromServer !== undefined) {
         res.write(queuedMessageFromServer);
@@ -44,12 +41,6 @@ module.exports.router = (req, res, next = ()=>{}) => {
     default: res.writeHead(404, headers);
   }
 
-  // console.log(req.postData)
-  // 200 status code
-  // sets everything for the header. status code and headers
-  // res.writeHead(200, headers);
-  // res.writeHead(setResponceData());
-  // adding data to the 'body' or whatever is posting the request?
 
   // signifying that the response object is finished being created
   res.end();
