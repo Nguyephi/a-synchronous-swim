@@ -6,14 +6,18 @@
   // TODO: build the swim command fetcher here
 
   const ajaxGetCommand = (cb = () => {}) => {
-    $.get(serverUrl , {
-      res: 'content-type',
-      next: (res) => {console.log(res)}
-    });
+    $.ajax({
+      type: 'GET',
+      url: serverUrl
+    })
+    .done((data) => {
+      if (cb) {
+        cb(data);
+      }
+    })
   };
 
-  // rs
-  // window.setInterval(() => {ajaxGetCommand()} , 1000);
+  setInterval(() => {ajaxGetCommand(SwimTeam.move)} , 5000);
 
   //
 
@@ -28,13 +32,13 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: serverURL,
+      url: serverUrl,
       cache: false,
       contentType: false,
       processData: false,
       success: () => {
         // reload the page
-        window.location = window.location.href;
+        //window.location = window.location.href;
       }
     });
   };

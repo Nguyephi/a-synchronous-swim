@@ -31,9 +31,6 @@ describe('server responses', () => {
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
-    console.log('=================', res._data)
-    console.log('=================', res._data.toString())
-    console.log('=================', JSON.stringify(res._data))
     expect(arr.includes(res._data.toString())).to.equal(true);
 
     done();
