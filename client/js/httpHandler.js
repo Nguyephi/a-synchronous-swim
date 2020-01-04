@@ -17,7 +17,7 @@
     })
   };
 
-  setInterval(() => {ajaxGetCommand(SwimTeam.move)} , 5000);
+  setInterval(() => {ajaxGetCommand(SwimTeam.move)} , 1000);
 
   //
 
@@ -25,6 +25,28 @@
   // The ajax file uploader is provided for your convenience!
   // Note: remember to fix the URL below.
   /////////////////////////////////////////////////////////////////////
+
+  const ajaxPostSwimDirection = (swimDirection, cb = () => {}) => {
+    $.ajax({
+      type: 'POST',
+      data: swimDirection,
+      url: serverUrl,
+      contentType: 'text/html',
+      success: () => {
+        console.log('swimDirection has been posted')
+        cb();
+      }
+    });
+  };
+
+
+  $('body').on('keydown', (event) => {
+    var arrowPress = event.key.match(/Arrow(Up|Down|Left|Right)/);
+    if (arrowPress) {
+      var direction = arrowPress[1];
+      ajaxPostSwimDirection(direction.toLowerCase());
+    }
+  });
 
   const ajaxFileUpload = (file) => {
     var formData = new FormData();
@@ -38,7 +60,7 @@
       processData: false,
       success: () => {
         // reload the page
-        //window.location = window.location.href;
+        window.location = window.location.href;
       }
     });
   };
