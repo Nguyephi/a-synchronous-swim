@@ -6,8 +6,8 @@
 /////////////////////////////////////////////////
 
 var request = function(url, method, postdata) {
-  this.url = url;
-  this.method = method;
+  this.url = url;// '/'
+  this.method = method; // 'GET'
   this._postData = postdata;
   this.setEncoding = function() { /* noop */ };
 
